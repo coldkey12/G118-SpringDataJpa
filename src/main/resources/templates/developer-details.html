@@ -10,7 +10,13 @@
     <input type="text" th:value="${razrab.email}" name="email"><br>
     <input type="text" th:value="${razrab.fullName}" name="fullName"><br>
     <input type="number" th:value="${razrab.age}" name="age"><br>
-    <input type="text" th:value="${razrab.progLang}" name="progLang"><br>
+    <select name="programmingLanguage.id">
+        <option th:each="lang : ${progLangs}"
+                th:value="${lang.id}"
+                th:text="${lang.name}"
+                th:selected="${lang.id==razrab.programmingLanguage.id}"></option>
+    </select>
+    <p th:text="${razrab.programmingLanguage.description}"></p>
     <button>UPDATE USER</button>
 </form>
 </body>

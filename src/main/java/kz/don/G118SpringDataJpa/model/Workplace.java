@@ -4,31 +4,26 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "DEVELOPERS")
+@Table(name = "WORKPLACES")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Developer {
+public class Workplace {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    public Long id;
 
-    @Column(name = "EMAIL", unique = true, nullable = false)
-    private String email;
+    @Column(name = "APPLICATION_AREA", columnDefinition = "VARCHAR(20)")
+    private String area;
 
-    @Column(name = "FULL_NAME", nullable = false)
-    private String fullName;
-
-    @Column(name = "AGE")
-    private Integer age;
+    @Column(name = "CAPTION", columnDefinition = "TEXT")
+    private String caption;
 
     @ManyToOne
     @JoinColumn(name = "PROGRAMMING_LANGUAGE_ID")
     private ProgrammingLanguage programmingLanguage;
-
-    @OneToOne
-    private Position position; //TODO crud operations
 }
