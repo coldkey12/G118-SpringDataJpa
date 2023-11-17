@@ -19,5 +19,49 @@
     <p th:text="${razrab.programmingLanguage.description}"></p>
     <button>UPDATE USER</button>
 </form>
+<div style="display: flex; justify-content: space-between; width: 500px"></div>
+<table cellpadding="10px">
+    <thead>
+    <th>ID</th>
+    <th>NAME</th>
+    <th>ADDRESS</th>
+    </thead>
+    <tbody>
+    <tr th:each="company : ${razrab.companies}">
+        <td th:text="${company.id}"></td>
+        <td th:text="${company.name}"></td>
+        <td th:text="${company.address}"></td>
+        <td>
+            <form action="/developer/company/delete" method="post">
+                <input type="hidden" name="developerId" th:value="${razrab.id}">
+                <input type="hidden" name="companyId" th:value="${company.id}">
+                <button style="background-color: red">- DELETE</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<table cellpadding="10px">
+    <thead>
+    <th>ID</th>
+    <th>NAME</th>
+    <th>ADDRESS</th>
+    </thead>
+    <tbody>
+    <tr th:each="company : ${filteredCompanies}">
+        <td th:text="${company.id}"></td>
+        <td th:text="${company.name}"></td>
+        <td th:text="${company.address}"></td>
+        <td>
+            <form action="/developer/company/add" method="post">
+                <input type="hidden" name="developerId" th:value="${razrab.id}">
+                <input type="hidden" name="companyId" th:value="${company.id}">
+                <button style="background-color: green">+ ADD</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

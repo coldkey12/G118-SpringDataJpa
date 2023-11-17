@@ -3,25 +3,22 @@ package kz.don.G118SpringDataJpa.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
-@Table(name = "PROGRAMMING_LANGUAGES")
+@Table(name = "COMPANIES")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProgrammingLanguage {
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NAME", unique = true, nullable = false)
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "DESCRIPTION", columnDefinition = "TEXT")
-    private String description;
-
+    @Column(name = "ADDRESS")
+    private String address;
 }

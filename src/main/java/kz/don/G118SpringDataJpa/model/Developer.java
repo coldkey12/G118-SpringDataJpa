@@ -3,6 +3,8 @@ package kz.don.G118SpringDataJpa.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "DEVELOPERS")
 @Getter
@@ -30,5 +32,8 @@ public class Developer {
     private ProgrammingLanguage programmingLanguage;
 
     @OneToOne
-    private Position position; //TODO crud operations
+    private Position position;
+
+    @ManyToMany
+    private List<Company> companies;
 }

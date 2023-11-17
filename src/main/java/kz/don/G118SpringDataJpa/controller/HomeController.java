@@ -1,6 +1,7 @@
 package kz.don.G118SpringDataJpa.controller;
 
 import kz.don.G118SpringDataJpa.model.Developer;
+import kz.don.G118SpringDataJpa.repository.CompanyRepository;
 import kz.don.G118SpringDataJpa.repository.DeveloperRepository;
 import kz.don.G118SpringDataJpa.repository.ProgLangRepository;
 import kz.don.G118SpringDataJpa.service.DeveloperService;
@@ -24,6 +25,9 @@ public class HomeController {
     @Autowired
     private ProgLangService progLangService;
 
+    @Autowired
+    private CompanyRepository companyRepository;
+
     @GetMapping("/")
     public String homePage(Model model) {
         var developers = developerService.findAll();
@@ -37,8 +41,13 @@ public class HomeController {
     public String getDeveloperById(@PathVariable Long id, Model model) {
         Developer developer = developerService.findById(id).orElse(null);
         var progLangs = progLangService.getProgrammingLanguages();
+        var companies = companyRepository.findAll();
+        if (developer != null) {
+            companies.removeAll(developer.getCompanies());
+        }
         model.addAttribute("razrab", developer);
         model.addAttribute("progLangs", progLangs);
+        model.addAttribute("filteredCompanies", companies);
         return "developer-details";
     }
 
@@ -66,5 +75,19 @@ public class HomeController {
         List<Developer> developers = developerService.search(search);
         model.addAttribute("razraby", developers);
         return "home";
+    }
+
+    @PostMapping("/developer/company/add")
+    public String addCompanyToDeveloper(@RequestParam Long developerId,
+                                        @RequestParam Long companyId) {
+        developerService.addCompany(developerId,companyId);
+        return "redirect:/developer/" + developerId;
+    }
+
+    @PostMapping("/developer/company/delete")
+    public String deleteCompanyFromDeveloper(@RequestParam Long developerId,
+                                             @RequestParam Long companyId) {
+        developerService.deleteCompany(developerId,companyId);
+        return "redirect:/developer/" + developerId;
     }
 }
